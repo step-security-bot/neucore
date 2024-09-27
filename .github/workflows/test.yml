@@ -34,13 +34,18 @@ jobs:
           MYSQL_DATABASE: test
         ports: ['3306:3306']
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # v2
         with:
           php-version: ${{ matrix.php-version }}
           extensions: gmp, xdebug, apcu
@@ -69,13 +74,13 @@ jobs:
 
       - name: Setup Java
         if: ${{ github.repository_owner == 'tkhamez' && matrix.php-version == '8.2' }}
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0 # v3.13.0
         with:
           distribution: 'temurin'
           java-version: 17
       - name: Setup SonarQube
         if: ${{ github.repository_owner == 'tkhamez' && matrix.php-version == '8.2' }}
-        uses: warchant/setup-sonar-scanner@v7
+        uses: warchant/setup-sonar-scanner@72fbd79b3b15c7fc1ca23ef619d7be046681199d # v7
       - name: SonarQube Scan
         if: ${{ github.repository_owner == 'tkhamez' && matrix.php-version == '8.2' }}
         env:

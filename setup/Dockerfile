@@ -1,13 +1,13 @@
 # Creates an image for production
 
 
-FROM php:8.2-apache-bullseye AS build
+FROM php:8.2-apache-bullseye@sha256:d73fb290f20ccd71910fa48077cde1032224b724627641bc4d02f933535b8987 AS build
 
 COPY neucore-*.tar.gz /var/www/neucore.tar.gz
 RUN tar -xf /var/www/neucore.tar.gz -C /var/www
 
 
-FROM php:8.2-apache-bullseye
+FROM php:8.2-apache-bullseye@sha256:d73fb290f20ccd71910fa48077cde1032224b724627641bc4d02f933535b8987
 
 ARG DEBIAN_FRONTEND=noninteractive
 
